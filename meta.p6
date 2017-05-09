@@ -1,5 +1,5 @@
 my $*SPEC = IO::Spec::Unix;
-print qq:to/EOF/;
+spurt 'META6.json', qq:to/EOF/.encode;
 \{
     "name"          : "TinyCC::Resources::Win64",
     "version"       : "0.1",
@@ -18,7 +18,7 @@ print qq:to/EOF/;
         "TinyCC::Resources::Win64::DLL" : "lib/TinyCC/Resources/Win64/DLL.pm"
     },
     "resources"     : [
-        { join ",\n        ", do gather 'resources'.IO.&(sub recur($_) {
+        { join ",\n        ", sort do gather 'resources'.IO.&(sub recur($_) {
             when .f { take .substr(10).perl }
             when .d { .&recur for .dir }
         }) }

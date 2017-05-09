@@ -17,6 +17,7 @@
     },
     "resources"     : [
         "win64/COPYING",
+        "win64/include/_mingw.h",
         "win64/include/assert.h",
         "win64/include/conio.h",
         "win64/include/ctype.h",
@@ -98,7 +99,6 @@
         "win64/include/winapi/winreg.h",
         "win64/include/winapi/winuser.h",
         "win64/include/winapi/winver.h",
-        "win64/include/_mingw.h",
         "win64/lib/chkstk.S",
         "win64/lib/crt1.c",
         "win64/lib/crt1w.c",
