@@ -1,5 +1,5 @@
-my constant DLL = ~$*VM.config<prefix>.IO.child('bin/libtcc.dll');
-sub EXPORT {
-    %*ENV<LIBTCC> = DLL;
-    BEGIN Map.new;
+my constant DLL = $*VM.config<prefix>.IO.child('bin/libtcc.dll');
+class TinyCC::Resources::Win64::DLL {
+    method path { DLL }
+    method setenv { %*ENV<LIBTCC> = ~DLL }
 }
