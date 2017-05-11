@@ -1,4 +1,18 @@
 my $*SPEC = IO::Spec::Unix;
+my @resources = sort do gather 'resources'.IO.&(sub recur($_) {
+    when .f { take .substr(10).perl }
+    when .d { .&recur for .dir }
+});
+
+spurt 'lib/TinyCC/Resources/Win64.pm', qq:to/EOF/.encode;
+BEGIN \{
+    my \\PREFIX = \$*VM.config<prefix>.IO;
+    { join "\n    ", @resources.map({
+        "\%?RESOURCES\{$_}.copy(.parent.mkdir.child(.basename)) given PREFIX.child($_);"
+    }) }
+}
+EOF
+
 spurt 'META6.json', qq:to/EOF/.encode;
 \{
     "name"          : "TinyCC::Resources::Win64",
@@ -15,13 +29,11 @@ spurt 'META6.json', qq:to/EOF/.encode;
     },
     "depends"       : [ ],
     "provides"      : \{
+        "TinyCC::Resources::Win64"      : "lib/TinyCC/Resources/Win64.pm",
         "TinyCC::Resources::Win64::DLL" : "lib/TinyCC/Resources/Win64/DLL.pm"
     },
     "resources"     : [
-        { join ",\n        ", sort do gather 'resources'.IO.&(sub recur($_) {
-            when .f { take .substr(10).perl }
-            when .d { .&recur for .dir }
-        }) }
+        { @resources.join(",\n        ") }
     ]
 }
 EOF
