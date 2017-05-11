@@ -16,7 +16,7 @@ EOF
 spurt 'META6.json', qq:to/EOF/.encode;
 \{
     "name"          : "TinyCC::Resources::Win64",
-    "version"       : "0.1",
+    "version"       : "0.2",
     "perl"          : "6.c",
     "author"        : "github:cygx",
     "license"       : "LGPL-2.1",
